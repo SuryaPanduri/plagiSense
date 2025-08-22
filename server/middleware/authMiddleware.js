@@ -1,28 +1,14 @@
+// server/middleware/authMiddleware.js
 import jwt from "jsonwebtoken";
-
-const authMiddleware = (req, res, next) => {
-  // ✅ Allow preflight requests through (important for CORS)
-  if (req.method === "OPTIONS") {
-    return next();
-  }
-
-  const authHeader = req.header("Authorization");
-  if (!authHeader) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
-  }
-
-  const token = authHeader.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
-  }
-
+export default function authMiddleware(req, res, next) {
+  if (req.method === "OPTIONS") return next(); // allow preflight
+  const auth = req.header("Authorization");
+  if (!auth) return res.status(401).json({ msg: "No token, authorization denied" });
+  const token = auth.split(" ")[1];
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    req.user = jwt.verify(token, process.env.JWT_SECRET);
     next();
-  } catch (err) {
+  } catch {
     res.status(401).json({ msg: "Token is not valid" });
   }
-};
-
-export default authMiddleware;
+}
