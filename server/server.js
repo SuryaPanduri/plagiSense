@@ -30,7 +30,7 @@ if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 
 // --- connect to Mongo
 import mongoose from "mongoose";
-const mongoUri = process.env.MONGO_URI;
+const mongoUri = process.env.MONGO_URL;
 if (!mongoUri) {
   console.error("❌ MONGO_URI missing");
   process.exit(1);
