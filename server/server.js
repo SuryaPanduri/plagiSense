@@ -45,7 +45,10 @@ mongoose.connect(mongoUri).then(() => {
 // --- routes
 import checkRoutes from "./routes/checkRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
-import authRoutes from "./routes/authRoutes.js"; // if you have it
+import authRoutes from "./routes/authRoutes.js";
+import compareRoutes from "./routes/compare.js";
+import internetCheckRoutes from "./routes/internetCheckRoutes.js"; // <-- add
+
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, uptime: process.uptime() });
@@ -54,6 +57,8 @@ app.get("/api/health", (req, res) => {
 app.use("/api/check", checkRoutes);
 app.use("/api/files", fileRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/compare", compareRoutes);
+app.use("/api/check", internetCheckRoutes);// <-- add (now /api/check/internet)
 
 // --- start
 const PORT = process.env.PORT || 5001;
