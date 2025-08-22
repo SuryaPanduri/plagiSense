@@ -125,7 +125,15 @@ const Dashboard = () => {
       const docId = up.data?.doc?._id;
       if (!docId) throw new Error("Upload succeeded but docId missing.");
 
-      const { data } = await API.post("/check/internet", { docId });
+      const { data } = await API.post(
+        "/check/internet",
+        { docId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       setWebReport(data.report);
     } catch (err) {
       console.error(err);
