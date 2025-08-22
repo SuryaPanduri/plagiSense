@@ -45,7 +45,7 @@ const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 
 /* ------------------- Mongo ------------------- */
-const mongoUri = process.env.MONGO_URI; // use MONGO_URI consistently
+const mongoUri = process.env.MONGO_URL; // use MONGO_URI consistently
 if (!mongoUri) {
   console.error("❌ MONGO_URI missing");
   process.exit(1);
